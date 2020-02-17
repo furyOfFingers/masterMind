@@ -23,7 +23,8 @@ const people: IDocumentCardActivityPerson[] = [
 export class DocumentCardCompactExample extends React.PureComponent {
   public render(): JSX.Element {
     const previewProps: IDocumentCardPreviewProps = {
-      getOverflowDocumentCountText: (overflowCount: number) => `+${overflowCount} more`,
+      getOverflowDocumentCountText: (overflowCount: number) =>
+        `+${overflowCount} more`,
       previewImages: [
         {
           name: 'Revenue stream proposal fiscal year 2016 version02.pptx',
@@ -74,7 +75,15 @@ export class DocumentCardCompactExample extends React.PureComponent {
     const previewPropsUsingIcon: IDocumentCardPreviewProps = {
       previewImages: [
         {
-          previewIconProps: { iconName: 'OpenFile', styles: { root: { fontSize: fonts.superLarge.fontSize, color: palette.white } } },
+          previewIconProps: {
+            iconName: 'OpenFile',
+            styles: {
+              root: {
+                fontSize: fonts.superLarge.fontSize,
+                color: palette.white
+              }
+            }
+          },
           width: 144
         }
       ],
@@ -108,52 +117,78 @@ export class DocumentCardCompactExample extends React.PureComponent {
       <Stack tokens={stackTokens}>
         {/* Document preview */}
         <DocumentCard
-          aria-label="Document Card with document preview. Revenue stream proposal fiscal year 2016 version 2.
-          Created by Roko Kolar a few minutes ago"
+          aria-label='Document Card with document preview. Revenue stream proposal fiscal year 2016 version 2.
+          Created by Roko Kolar a few minutes ago'
           type={DocumentCardType.compact}
-          onClickHref="http://bing.com"
+          onClickHref='http://bing.com'
         >
-          <DocumentCardPreview previewImages={[previewProps.previewImages[0]]} />
+          <DocumentCardPreview
+            previewImages={[previewProps.previewImages[0]]}
+          />
           <DocumentCardDetails>
-            <DocumentCardTitle title="Revenue stream proposal fiscal year 2016 version02.pptx" shouldTruncate={true} />
-            <DocumentCardActivity activity="Created a few minutes ago" people={[people[1]]} />
+            <DocumentCardTitle
+              title='Revenue stream proposal fiscal year 2016 version02.pptx'
+              shouldTruncate={true}
+            />
+            <DocumentCardActivity
+              activity='Created a few minutes ago'
+              people={[people[1]]}
+            />
           </DocumentCardDetails>
         </DocumentCard>
         {/* Folder or site activity */}
         <DocumentCard
-          aria-label="Document Card with folder or site activity. 4 files were uploaded. Created by Annie Lindqvist a few minutes ago"
+          aria-label='Document Card with folder or site activity. 4 files were uploaded. Created by Annie Lindqvist a few minutes ago'
           type={DocumentCardType.compact}
-          onClickHref="http://bing.com"
+          onClickHref='http://bing.com'
         >
           <DocumentCardPreview {...previewProps} />
           <DocumentCardDetails>
-            <DocumentCardTitle title="4 files were uploaded" shouldTruncate={true} />
-            <DocumentCardActivity activity="Created a few minutes ago" people={[people[0]]} />
+            <DocumentCardTitle
+              title='4 files were uploaded'
+              shouldTruncate={true}
+            />
+            <DocumentCardActivity
+              activity='Created a few minutes ago'
+              people={[people[0]]}
+            />
           </DocumentCardDetails>
         </DocumentCard>
         {/* Card with icon */}
         <DocumentCard
-          aria-label="Document Card with icon. View and share files. Created by Aaron Reid a few minutes ago"
+          aria-label='Document Card with icon. View and share files. Created by Aaron Reid a few minutes ago'
           type={DocumentCardType.compact}
-          onClickHref="http://bing.com"
+          onClickHref='http://bing.com'
         >
           <DocumentCardPreview {...previewPropsUsingIcon} />
           <DocumentCardDetails>
-            <DocumentCardTitle title="View and share files" shouldTruncate={true} />
-            <DocumentCardActivity activity="Created a few minutes ago" people={[people[2]]} />
+            <DocumentCardTitle
+              title='View and share files'
+              shouldTruncate={true}
+            />
+            <DocumentCardActivity
+              activity='Created a few minutes ago'
+              people={[people[2]]}
+            />
           </DocumentCardDetails>
         </DocumentCard>
         {/* Email conversation */}
         <DocumentCard
-          aria-label="Document Card with email conversation. Conversation about takeaways from annual SharePoint conference.
-          Sent by Christian Bergqvist a few minutes ago"
+          aria-label='Document Card with email conversation. Conversation about takeaways from annual SharePoint conference.
+          Sent by Christian Bergqvist a few minutes ago'
           type={DocumentCardType.compact}
-          onClickHref="http://bing.com"
+          onClickHref='http://bing.com'
         >
           <DocumentCardPreview {...previewOutlookUsingIcon} />
           <DocumentCardDetails>
-            <DocumentCardTitle title="Conversation about takeaways from annual SharePoint conference" shouldTruncate={true} />
-            <DocumentCardActivity activity="Sent a few minutes ago" people={[people[3]]} />
+            <DocumentCardTitle
+              title='Conversation about takeaways from annual SharePoint conference'
+              shouldTruncate={true}
+            />
+            <DocumentCardActivity
+              activity='Sent a few minutes ago'
+              people={[people[3]]}
+            />
           </DocumentCardDetails>
         </DocumentCard>
       </Stack>
