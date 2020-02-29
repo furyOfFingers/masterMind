@@ -20,8 +20,8 @@ const people: IDocumentCardActivityPerson[] = [
   { name: 'Christian Bergqvist', profileImageSrc: '', initials: 'CB' }
 ];
 
-export class DocumentCardCompactExample extends React.PureComponent {
-  public render(): JSX.Element {
+export const DocumentCardCompactExample = {
+  render(): JSX.Element {
     const previewProps: IDocumentCardPreviewProps = {
       getOverflowDocumentCountText: (overflowCount: number) =>
         `+${overflowCount} more`,
@@ -136,6 +136,7 @@ export class DocumentCardCompactExample extends React.PureComponent {
             />
           </DocumentCardDetails>
         </DocumentCard>
+
         {/* Folder or site activity */}
         <DocumentCard
           aria-label='Document Card with folder or site activity. 4 files were uploaded. Created by Annie Lindqvist a few minutes ago'
@@ -154,6 +155,7 @@ export class DocumentCardCompactExample extends React.PureComponent {
             />
           </DocumentCardDetails>
         </DocumentCard>
+
         {/* Card with icon */}
         <DocumentCard
           aria-label='Document Card with icon. View and share files. Created by Aaron Reid a few minutes ago'
@@ -172,6 +174,7 @@ export class DocumentCardCompactExample extends React.PureComponent {
             />
           </DocumentCardDetails>
         </DocumentCard>
+
         {/* Email conversation */}
         <DocumentCard
           aria-label='Document Card with email conversation. Conversation about takeaways from annual SharePoint conference.
@@ -194,4 +197,4 @@ export class DocumentCardCompactExample extends React.PureComponent {
       </Stack>
     );
   }
-}
+};
