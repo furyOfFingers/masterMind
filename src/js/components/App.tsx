@@ -1,16 +1,8 @@
 import React from 'react';
-import Notification from './ClientCard/Notification';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { changeFirstName, changeSecondName} from '../../store/actions'
-// import { DocumentCardCompactExample } from './ClientCard/ClientCard';
-
-// const App: React.FC = ({}): JSX.Element => (
-//   <div>
-//     <Notification text='hello there'></Notification>
-//     {/* <DocumentCardCompactExample></DocumentCardCompactExample> */}
-//   </div>
-// );
+import { changeFirstName, changeSecondName } from '../../store/actions';
+import { IFieldState } from '../../Types/Types';
 
 class App extends React.Component {
   render() {
@@ -25,7 +17,7 @@ class App extends React.Component {
       <div className='App'>
         <div>
           <input
-            value={this.props.firstName}
+            value={firstName}
             type='text'
             placeholder='First Name'
             onChange={event => {
@@ -36,7 +28,7 @@ class App extends React.Component {
 
         <div>
           <input
-            value={this.props.secondName}
+            value={secondName}
             type='text'
             placeholder='Second Name'
             onChange={event => {
@@ -51,14 +43,14 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IFieldState) => {
   return {
     firstName: state.firstName,
     secondName: state.secondName
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     changeFirstName: bindActionCreators(changeFirstName, dispatch),
     changeSecondName: bindActionCreators(changeSecondName, dispatch)
