@@ -32,10 +32,13 @@
   "dependencies": {
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "^7.1.7",
     "@uifabric/example-data": "^7.0.5",
     "office-ui-fabric-react": "^7.93.0",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
-    "react-fc": "^0.41.0"
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-fc": "^0.41.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   }
 }
