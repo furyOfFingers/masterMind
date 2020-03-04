@@ -1,6 +1,6 @@
 import React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   handleCancel,
   changeFirstName,
