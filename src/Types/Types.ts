@@ -11,21 +11,21 @@ export interface IFieldState {
 };
 
 /** Interface для action поля firstName. */
-interface FirstName {
+export interface IFirstNameProps {
   type: typeof ACTION_CHANGE_FIRST_NAME;
   payload: IFieldState;
 };
 
 /** Interface для action поля secondName. */
-interface SecondName {
+export interface ISecondNameProps {
   type: typeof ACTION_CHANGE_SECOND_NAME;
   payload: IFieldState;
 };
 
 /** Interface для action снопки "Cancel". */
-interface InitialState {
+export interface InitialState {
   type: typeof ACTION_REVERT_ALL_FIELD;
   payload: IFieldState;
 };
 
-export type IFieldActionTypes = FirstName | SecondName | InitialState;
+export type IFieldActionTypes = IFirstNameProps | ISecondNameProps | InitialState;
