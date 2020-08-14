@@ -1,5 +1,5 @@
 {
-  "name": "baseBuild",
+  "name": "master-mind",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
   },
-  "author": "",
+  "author": "Marat Asasullaev",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.8.4",
