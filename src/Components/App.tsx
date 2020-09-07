@@ -1,15 +1,10 @@
 import React from 'react';
+import Layout from './Layout/Layout';
 
-interface IAppProps {
-
-}
+interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = ({}): JSX.Element => {
-  return (
-    <div>
-      hello there !!!!
-    </div>
-  );
-}
+  return <Layout></Layout>;
+};
 
 export default App;

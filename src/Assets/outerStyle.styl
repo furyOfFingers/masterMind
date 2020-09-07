@@ -1,0 +1,35 @@
+@import './variables.styl';
+
+.hit-count
+  display flex
+  align-items center
+  width 205px
+  height 53px
+  background $color-dark-grey
+
+.active
+  cursor pointer
+
+.size
+  &__small
+    width 10px
+    height 10px
+    border-radius 5px
+  &__normal
+    width 30px
+    height 30px
+    border-radius 15px
+  &__big
+    width 41px
+    height 41px
+    border-radius 22px
+    margin-right 5px
+    &:last-child
+      margin-right 0px
+
+.clicked
+  border 2px solid brown
+
+.color-selected
+  box-sizing border-box
+  border 2px solid brown
