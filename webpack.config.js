@@ -26,10 +26,23 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.styl$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              esModule: true,
+              sourceMap: true,
+              modules: {
+                localIdentName: '[local]--[hash:base64:4]',
+              },
+            },
+          },
+          { loader: 'stylus-loader' },
+        ],
       },
     ],
   },
