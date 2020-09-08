@@ -4,12 +4,11 @@ import s from './style.styl';
 import { CircleArr } from '../../Constants/const';
 import Circle from '../Circle/Circle';
 
-interface ICalculationFieldProps {}
 
 /**
  * Component displaying correct selection.
  */
-const CalculationField = ({}: ICalculationFieldProps) => {
+const CalculationField = (): JSX.Element => {
 
   const circleRender= () => {
     return CircleArr.map((el: string, i: number) => {

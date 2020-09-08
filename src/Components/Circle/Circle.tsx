@@ -27,7 +27,7 @@ const Circle = ({
   onClick,
   isColorSelected,
   extraClass = [],
-}: ICircleProps) => {
+}: ICircleProps): JSX.Element => {
   const cn = c(
     so[`size__${size}`],
     { [so['active']]: active },

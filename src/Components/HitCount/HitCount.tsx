@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
+
+import IAppState from '../../Types/State';
+import { IInitialCircle } from '../../Types/Types';
 import s from './style.styl';
 import so from '../../Assets/outerStyle.styl';
-import { connect } from 'react-redux';
 
 import { CircleArr } from '../../Constants/const';
 import Circle from '../Circle/Circle';
 
-interface IHitCountProps {}
-
 /**
  * Middle component on which the color is chosen.
  */
-const HitCount = ({ ...props }: IHitCountProps) => {
-  const initialCircle = {
+const HitCount = (): JSX.Element => {
+
+  const initialCircle: IInitialCircle = {
     extraClass: '',
     clicked: false,
   };
 
-  const [circle, setCircle] = useState({} as any);
+  const color: string = useSelector((state: IAppState) => state.color.color);
 
-  // можно ли эту логику перенести в circleRender?
+  const [circle, setCircle] = useState({} as IInitialCircle[]);
+
   useEffect(() => {
-    const newCircle = {} as any;
+    const newCircle = {} as IInitialCircle[];
 
-    CircleArr.forEach((el, i: number) => {
+    CircleArr.forEach((el: string, i: number) => {
       newCircle[i] = { ...initialCircle };
     });
     setCircle(newCircle);
@@ -32,7 +35,7 @@ const HitCount = ({ ...props }: IHitCountProps) => {
   const handlePainting = (el: string, i: number) => {
     const newCircle = {...circle};
 
-    newCircle[i].extraClass = props.color;
+    newCircle[i].extraClass = color;
     setCircle(newCircle);
   };
 
@@ -43,9 +46,9 @@ const HitCount = ({ ...props }: IHitCountProps) => {
       circleArray.push(
         <React.Fragment key={i}>
           <Circle
-            isColorSelected={props.color}
+            isColorSelected={!!color && !circle[i].extraClass}
             active
-            extraClass={[s[circle[el].extraClass]]}
+            extraClass={[s[circle[i].extraClass as string]]}
             onClick={() => handlePainting(el, i)}
           />
         </React.Fragment>
@@ -57,21 +60,15 @@ const HitCount = ({ ...props }: IHitCountProps) => {
 
   return (
     <div className={so['hit-count']}>
-      {props.color && <div className={s['left-bar']}></div>}
+      {color && <div className={s['left-bar']}></div>}
 
       <div className={s['circle-container']}>
         {circleRender()}
       </div>
 
-      {props.color && <div className={s['right-bar']}></div>}
+      {color && <div className={s['right-bar']}></div>}
     </div>
   );
 };
 
-const mapDispatchToProps = {};
-
-const mapStateToProps = (state: any) => ({
-  color: state.color.color,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HitCount);
+export default HitCount;

@@ -1,9 +1,7 @@
 import React from 'react';
 import Layout from './Layout/Layout';
 
-interface IAppProps {}
-
-const App: React.FunctionComponent<IAppProps> = ({}): JSX.Element => {
+const App = (): JSX.Element => {
   return <Layout></Layout>;
 };
 
