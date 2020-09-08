@@ -1,27 +1,28 @@
 import React,{ useState, useEffect } from 'react';
 import s from './style.styl';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+import { IInitialCircle } from '../../Types/Types';
 
 import { AllColor } from '../../Constants/const';
 import { getColorAction } from '../../Redux/Color/Actions';
 import Circle from '../Circle/Circle';
 
-interface IColorHolderProps {}
-
 /**
  * Component containing all colors.
  */
-// to-do resolve any
-const ColorHolder = ({...props}: IColorHolderProps) => {
+const ColorHolder = (): JSX.Element => {
   const initialCircle = {
     extraClass: '',
     clicked: false
   };
 
-  const [circle, setCircle] = useState({} as any);
+  const dispatch = useDispatch();
+
+  const [circle, setCircle] = useState({} as IInitialCircle[]);
 
   useEffect(() => {
-    const newCircle = {} as any;
+    const newCircle = {} as IInitialCircle[];
 
     AllColor.forEach((el, i) => {
       newCircle[i] = {...initialCircle}
@@ -32,14 +33,15 @@ const ColorHolder = ({...props}: IColorHolderProps) => {
   }, []);
 
   const handleColorPick = (el: string, i: number) => {
-    let newCircle = {} as any;
+    let newCircle = {} as IInitialCircle[];
     newCircle = {...circle};
 
     for(let el in newCircle){
       newCircle[el].clicked = false;
-    }
+    };
+
     newCircle[i].clicked = true;
-    props.getColorAction(circle[el].extraClass);
+    dispatch(getColorAction(circle[i].extraClass as string));
 
     setCircle(newCircle);
   };
@@ -51,9 +53,9 @@ const ColorHolder = ({...props}: IColorHolderProps) => {
       circleArray.push(
         <React.Fragment key={i}>
           <Circle
-            clicked = {circle[el].clicked}
+            clicked = {circle[i].clicked as boolean}
             active
-            extraClass={[s[circle[el].extraClass]]}
+            extraClass={[s[circle[i].extraClass as string]]}
             size="normal"
             onClick={() => handleColorPick(el, i)}
           />
@@ -71,12 +73,4 @@ const ColorHolder = ({...props}: IColorHolderProps) => {
   );
 };
 
-const mapDispatchToProps = {
-  getColorAction,
-};
-
-const mapStateToProps = (state: any) => ({
-  color: state.color.color
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ColorHolder);
+export default ColorHolder;

@@ -3,9 +3,7 @@ import s from './style.styl';
 
 import Game from '../../Modules/Game/Game';
 
-interface ILayoutProps {}
-
-const Layout = ({}: ILayoutProps) => {
+const Layout = (): JSX.Element => {
   return (
     <div className={s['layout']}>
       <Game></Game>

@@ -8,6 +8,6 @@ import { GET_COLOR } from './Consts';
 export function getColorAction(color) {
   return {
     type: GET_COLOR,
-    color: color
+    color
   };
 };

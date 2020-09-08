@@ -1,8 +1,5 @@
 
 export interface IInitialCircle {
-  extraClass?: (string | object)[];
+  extraClass?: string;
   clicked: boolean
-}
-export interface ICircle {
-  circle: IInitialCircle;
 }
