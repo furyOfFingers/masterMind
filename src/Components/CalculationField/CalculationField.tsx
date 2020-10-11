@@ -1,30 +1,39 @@
-import React from 'react';
-import s from './style.styl';
+import React from "react";
+import s from "./style.styl";
+import { CircleArr } from "Constants/const";
 
-import { CircleArr } from '../../Constants/const';
-import Circle from '../Circle/Circle';
+import Circle from "Components/Circle/Circle";
 
+interface ICalculationFieldProps {
+  /** Number of repetitions of render. */
+  number: number;
+}
 
 /**
  * Component displaying correct selection.
  */
-const CalculationField = (): JSX.Element => {
+const CalculationField = React.memo(
+  ({ number }: ICalculationFieldProps): JSX.Element => {
+    const circleRender = () => {
+      const circleArr: JSX.Element[] = [];
 
-  const circleRender= () => {
-    return CircleArr.map((el: string, i: number) => {
-      return (
-        <React.Fragment key={i}>
-          <Circle extraClass={[s[el]]} size="small" ></Circle>
-        </React.Fragment>
-      )
-    });
-  };
+      if (number) {
+        for (let i = 0; i < number; i++) {
+          circleArr.push(
+            <Circle
+              key={i}
+              extraClass={[s[CircleArr[i]]]}
+              size="small"
+            />
+          );
+        }
+      }
 
-  return (
-    <div className={s['calculation-field']}>
-      {circleRender()}
-    </div>
-  );
-};
+      return circleArr;
+    };
 
+    return <div className={s["calculation-field"]}>{circleRender()}</div>;
+  });
+
+CalculationField.displayName = "CalculationField";
 export default CalculationField;

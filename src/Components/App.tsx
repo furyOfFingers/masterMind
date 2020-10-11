@@ -1,14 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { AllColor, CircleArr } from '../Constants/const';
-import shuffleColorArr from '../Utilits/shuffleColorArr';
-
-import Layout from './Layout/Layout';
+import Layout from "./Layout/Layout";
 
 const App = (): JSX.Element => {
-  shuffleColorArr(AllColor, CircleArr);
 
-  return <Layout></Layout>;
+  return <Layout/>;
 };
 
 export default App;
