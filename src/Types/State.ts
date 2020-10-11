@@ -1,12 +1,16 @@
 
-interface ColorState {
-  color: string
+interface IColorState {
+  color: string;
+  randomColor: string[];
+  correctColorInfo: number[];
 }
-interface ConfirmState {
+interface IConfirmState {
   show: boolean
 }
 
-export default interface IAppState {
-  color: ColorState;
-  show: ConfirmState
+interface IAppState {
+  color: IColorState;
+  show: IConfirmState;
 }
+
+export default IAppState;

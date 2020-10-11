@@ -1,12 +1,12 @@
-import React from 'react';
-import s from './Button.styl';
-import c from 'classnames';
+import React from "react";
+import s from "./Button.styl";
+import c from "classnames";
 
 interface IButtonProps {
   text?: string;
   onClick: (event: React.MouseEvent) => void;
   disabled?: boolean;
-  extraClass?: (string | object)[];
+  extraClass?: string[];
 }
 
 const Button = ({
@@ -15,17 +15,10 @@ const Button = ({
   disabled,
   extraClass = [],
 }: IButtonProps): JSX.Element => {
-  const style = c(
-    { [s['disabled']]: disabled },
-    ...extraClass
-  );
+  const style = c({ [s["disabled"]]: disabled }, ...extraClass);
 
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={style}
-    >
+    <button onClick={onClick} disabled={disabled} className={style}>
       {text}
     </button>
   );

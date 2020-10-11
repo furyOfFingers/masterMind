@@ -1,9 +1,10 @@
-import { createStore, compose } from 'redux';
-import rootReducer from '../Redux/rootReducer';
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "../Redux/rootReducer";
 
-const composeEnhancers =
-  (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== "production"
+});
 
-const store = createStore(rootReducer, composeEnhancers());
 
 export default store;

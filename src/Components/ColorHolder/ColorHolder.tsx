@@ -1,76 +1,68 @@
-import React,{ useState, useEffect } from 'react';
-import s from './style.styl';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, useCallback } from "react";
+import s from "./style.styl";
+import { useDispatch } from "react-redux";
 
-import { IInitialCircle } from '../../Types/Types';
+import { IInitialCircle } from "Types/Types";
 
-import { AllColor } from '../../Constants/const';
-import { getColorAction } from '../../Redux/Color/Actions';
-import Circle from '../Circle/Circle';
+import { AllColor, InitialCircle } from "Constants/const";
+import { getColor } from "Redux/Color/Reducers";
+import Circle from "Components/Circle/Circle";
 
 /**
  * Component containing all colors.
  */
-const ColorHolder = (): JSX.Element => {
-  const initialCircle = {
-    extraClass: '',
-    clicked: false
-  };
+const ColorHolder = React.memo(
+  (): JSX.Element => {
+    const dispatch = useDispatch();
+    const [circle, setCircle] = useState({} as IInitialCircle[]);
 
-  const dispatch = useDispatch();
+    useEffect(() => {
+      const newCircle = {} as IInitialCircle[];
 
-  const [circle, setCircle] = useState({} as IInitialCircle[]);
+      AllColor.forEach((el, i) => {
+        newCircle[i] = { ...InitialCircle };
+        newCircle[i].extraClass = el;
+      });
 
-  useEffect(() => {
-    const newCircle = {} as IInitialCircle[];
+      setCircle(newCircle);
+    }, []);
 
-    AllColor.forEach((el, i) => {
-      newCircle[i] = {...initialCircle}
-      newCircle[i].extraClass = el
-    });
+    const handleColorPick = useCallback(
+      (_: string, i: number) => {
+        const newCircle = { ...circle } as IInitialCircle[];
 
-    setCircle(newCircle);
-  }, []);
+        for (const el in newCircle) {
+          newCircle[el].clicked = false;
+        }
+        newCircle[i].clicked = true;
+        dispatch(getColor(circle[i].extraClass as string));
 
-  const handleColorPick = (el: string, i: number) => {
-    let newCircle = {} as IInitialCircle[];
-    newCircle = {...circle};
+        setCircle(newCircle);
+      },
+      [circle]
+    );
 
-    for(let el in newCircle){
-      newCircle[el].clicked = false;
-    };
+    const circleRender = () => {
+      const circleArray: JSX.Element[] = [];
 
-    newCircle[i].clicked = true;
-    dispatch(getColorAction(circle[i].extraClass as string));
-
-    setCircle(newCircle);
-  };
-
-  const circleRender= () => {
-    const circleArray: JSX.Element[] = [];
-
-    Object.keys(circle).map((el: string, i: number) => {
-      circleArray.push(
-        <React.Fragment key={i}>
+      Object.keys(circle).forEach((el: string, i: number) => {
+        circleArray.push(
           <Circle
-            clicked = {circle[i].clicked as boolean}
+            key={i}
+            clicked={circle[i].clicked as boolean}
             active
             extraClass={[s[circle[i].extraClass as string]]}
             size="normal"
             onClick={() => handleColorPick(el, i)}
           />
-        </React.Fragment>
-      );
-    });
+        );
+      });
 
-    return circleArray;
-  };
+      return circleArray;
+    };
 
-  return (
-    <div className={s['color-holder']}>
-      {circleRender()}
-    </div>
-  );
-};
+    return <div className={s["color-holder"]}>{circleRender()}</div>;
+  }
+);
 
 export default ColorHolder;
