@@ -1,8 +1,8 @@
 
 interface IColorState {
   color: string;
-  randomColor: string[];
-  correctColorInfo: number[];
+  randomColor: Array<string>;
+  roundStatic: string;
 }
 interface IConfirmState {
   show: boolean

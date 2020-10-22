@@ -19,10 +19,11 @@ module.exports = {
       Assets: path.resolve(__dirname, 'src/Assets/'),
       Components: path.resolve(__dirname, 'src/Components/'),
       Constants: path.resolve(__dirname, 'src/Constants/'),
+      Modules: path.resolve(__dirname, 'src/Modules/'),
       Redux: path.resolve(__dirname, 'src/Redux/'),
       Store: path.resolve(__dirname, 'src/Store/'),
       Types: path.resolve(__dirname, 'src/Types/'),
-      Modules: path.resolve(__dirname, 'src/Modules/'),
+      Utilits: path.resolve(__dirname, 'src/Utilits/'),
     },
     extensions: [".ts", ".tsx", ".js"]
   },

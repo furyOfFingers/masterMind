@@ -5,16 +5,23 @@ import c from "classnames";
 import IAppState from "Types/State";
 import { IInitialCircle } from "Types/Types";
 import { getConfirmAction } from "Redux/Confirmer/Reducers";
-import { getCorrectColorInfo } from "Redux/Color/Reducers";
+import { getRoundStatics } from "Redux/Color/Reducers";
 import Circle from "Components/Circle/Circle";
 import { CircleArr, InitialCircle } from "Constants/const";
 import s from "./style.styl";
 import so from "Assets/outerStyle.styl";
 
+interface IHitCountProps {
+  /** Attribute of editable component Circle. */
+  isEditable: boolean;
+  /** Sign of finished painting. */
+  filled: boolean;
+}
+
 /**
  * Middle component on which the color is chosen.
  */
-const HitCount = React.memo((): JSX.Element => {
+const HitCount = React.memo(({isEditable, filled}: IHitCountProps): JSX.Element => {
 
   const color: string = useSelector((state: IAppState) => state.color.color);
   const randomColor: string[] = useSelector(
@@ -24,8 +31,7 @@ const HitCount = React.memo((): JSX.Element => {
   const dispatch = useDispatch();
 
   const [circle, setCircle] = useState({} as IInitialCircle[]);
-  const [filled, setFilled] = useState(false);
-  let [clickCounter, setClickCounter] = useState(0);
+  const [filledAll, setFilledAll] = useState([0, 0, 0, 0]);
 
   useEffect(() => {
     const newCircle = {} as IInitialCircle[];
@@ -47,8 +53,8 @@ const HitCount = React.memo((): JSX.Element => {
     if (allColorsFromBlock.length === 4) {
       const correctColorCount = [] as string[];
       const correctColorPlace = [] as string[];
-      const randomUniqColorSet = new Set();
-      const correctColorInfo = [] as number[];
+      const randomUniqColorSet = new Set<string>();
+      let correctColorInfo = "";
 
       /** Checks the correct location of the correct color. */
       randomColor.forEach((el: string, i: number) => {
@@ -59,7 +65,7 @@ const HitCount = React.memo((): JSX.Element => {
         }
       });
 
-      const randomUniqColorArr = [...(randomUniqColorSet as any)];
+      const randomUniqColorArr = [...(randomUniqColorSet)];
 
       /** Checks for a color from the array. */
       randomUniqColorArr.forEach((el: string) => {
@@ -73,32 +79,40 @@ const HitCount = React.memo((): JSX.Element => {
         console.log("congrat");
       }
 
-      correctColorInfo.push(correctColorCount.length);
-      correctColorInfo.push(correctColorPlace.length);
-      dispatch(getCorrectColorInfo(correctColorInfo as any));
-
-      setFilled(true);
+      correctColorInfo = correctColorCount.length.toString();
+      correctColorInfo += correctColorPlace.length.toString();
+      dispatch(getRoundStatics(correctColorInfo));
     }
   };
 
   /** Checks if all blocks are filled */
   const filledBlockCounter = () => {
-    setClickCounter((clickCounter += 1));
+    let showConfirm = true;
 
-    if (clickCounter === CircleArr.length) {
+    if(filledAll.indexOf(0) >= 0) {
+      showConfirm = false;
+    }
+
+    if (showConfirm) {
       dispatch(getConfirmAction(true));
     }
   };
 
   /** Fills the Circle component with color. */
   const handlePainting = (_: string, i: number) => {
-    const newCircle = { ...circle };
+    if(isEditable) {
+      const newCircle = { ...circle };
+      const newFilledAll = filledAll;
 
-    newCircle[i].extraClass = color;
-    setCircle(newCircle);
+      newFilledAll[i] = 1;
+      setFilledAll(newFilledAll);
 
-    color && filledBlockCounter();
-    checkingColorBlocks();
+      newCircle[i].extraClass = color;
+      setCircle(newCircle);
+
+      color && filledBlockCounter();
+      checkingColorBlocks();
+    }
   };
 
   /** Render side string block. */
@@ -114,14 +128,13 @@ const HitCount = React.memo((): JSX.Element => {
 
     Object.keys(circle).forEach((el: string, i: number) => {
       circleArray.push(
-        <React.Fragment key={i}>
-          <Circle
-            isColorSelected={!!color && !circle[i].extraClass}
-            active
-            extraClass={[s[circle[i].extraClass as string]]}
-            onClick={() => handlePainting(el, i)}
-          />
-        </React.Fragment>
+        <Circle
+          key={i}
+          isColorSelected={!!color && !circle[i].extraClass}
+          active={isEditable}
+          extraClass={[s[circle[i].extraClass as string]]}
+          onClick={() => handlePainting(el, i)}
+        />
       );
     });
 

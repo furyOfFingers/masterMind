@@ -1,6 +1,6 @@
 import React from "react";
-import so from "Assets/outerStyle.styl";
 import c from "classnames";
+import so from "Assets/outerStyle.styl";
 
 interface ICircleProps {
   /** Circle size. */
