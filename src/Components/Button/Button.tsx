@@ -9,7 +9,7 @@ interface IButtonProps {
   extraClass?: string[];
 }
 
-const Button = ({
+const Button = React.memo(({
   text,
   onClick,
   disabled,
@@ -22,6 +22,6 @@ const Button = ({
       {text}
     </button>
   );
-};
+});
 
 export default Button;
