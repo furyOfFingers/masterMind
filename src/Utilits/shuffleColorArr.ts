@@ -7,14 +7,11 @@ const shuffleColorArr = (allColor: Array<string>, circleArr: number): void => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const shuffle: Array<string> = allColor.sort(() => Math.random() - 0.5);
-    const colorArr = [] as Array<string>;
+    const shuffle: Array<string> = allColor
+      .sort(() => Math.random() - 0.5)
+      .slice(0, circleArr);
 
-    for (let i = 0; i < circleArr; i++) {
-      colorArr.push(shuffle[i]);
-    }
-
-    dispatch(getRandomColor(colorArr as Array<string>));
+    dispatch(getRandomColor(shuffle as Array<string>));
   }, []);
 };
 

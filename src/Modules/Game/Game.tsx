@@ -14,9 +14,9 @@ import ColorHolder from "Components/ColorHolder/ColorHolder";
 
 const Game = React.memo(
   (): JSX.Element => {
-
     shuffleColorArr(AllColor, CircleArr.length);
     const [gameStatic, setGameStatic] = useState([InitialGameStatic]);
+    const [victory, setVictory] = useState(false);
 
     const showConfirm: boolean = useSelector(
       (state: IAppState) => state.show.show
@@ -29,20 +29,23 @@ const Game = React.memo(
     const dispatch = useDispatch();
 
     const handleConfirm = () => {
-      console.log(Object.keys(gameStatic).length);
-      const newGameStatic = {...gameStatic};
-      const l = Object.keys(newGameStatic).length;
+      if (colorInfo === "44") {
+        setVictory(true);
+      } else {
+        const newGameStatic = { ...gameStatic };
+        const l = Object.keys(newGameStatic).length;
 
-      newGameStatic[l - 1].number = colorInfo;
-      newGameStatic[l - 1].editable = false;
-      newGameStatic[l] = {
-        number: "",
-        fillLine: false,
-        editable: true
-      };
+        newGameStatic[l - 1].number = colorInfo;
+        newGameStatic[l - 1].editable = false;
+        newGameStatic[l] = {
+          number: "",
+          fillLine: false,
+          editable: true,
+        };
 
-      dispatch(getConfirmAction(false));
-      setGameStatic(newGameStatic);
+        dispatch(getConfirmAction(false));
+        setGameStatic(newGameStatic);
+      }
     };
 
     const gameStageRender = () => {
@@ -51,9 +54,18 @@ const Game = React.memo(
       Object.keys(gameStatic).forEach((_: string, i: number) => {
         newGameStage.push(
           <div key={i} className={s["playing-field"]}>
-            <CalculationField number={parseInt(gameStatic[i].number.charAt(0))} />
-            <HitCount filled={!!gameStatic[i].number.charAt(0)} isEditable={gameStatic[i].editable} />
-            <CalculationField number={parseInt(gameStatic[i].number.charAt(1))} />
+            <CalculationField
+              number={parseInt(gameStatic[i].number.charAt(0))}
+            />
+
+            <HitCount
+              filled={!!gameStatic[i].number.charAt(0)}
+              isEditable={gameStatic[i].editable}
+            />
+
+            <CalculationField
+              number={parseInt(gameStatic[i].number.charAt(1))}
+            />
           </div>
         );
       });
@@ -62,10 +74,14 @@ const Game = React.memo(
     };
 
     const gameRender = () => {
-      if(Object.keys(gameStatic).length === 10) {
-        return <div className={s["lose"]}> you lose </div>;
+      if (victory) {
+        return <div className={s["lose"]}> you figured out the code </div>;
       } else {
-        return gameStageRender();
+        if (Object.keys(gameStatic).length === 9) {
+          return <div className={s["lose"]}> you lose </div>;
+        } else {
+          return gameStageRender();
+        }
       }
     };
 
@@ -75,7 +91,9 @@ const Game = React.memo(
 
         {gameRender()}
 
-        {showConfirm && <Button text="Confirm" onClick={handleConfirm} />}
+        {showConfirm && !victory && (
+          <Button text="Confirm" onClick={handleConfirm} />
+        )}
       </div>
     );
   }
