@@ -12,6 +12,8 @@ import s from "./style.styl";
 import so from "Assets/outerStyle.styl";
 
 interface IHitCountProps {
+  /** Initial random color. */
+  randomColor: string[];
   /** Attribute of editable component Circle. */
   isEditable: boolean;
   /** Sign of finished painting. */
@@ -21,12 +23,12 @@ interface IHitCountProps {
 /**
  * Middle component on which the color is chosen.
  */
-const HitCount = React.memo(({isEditable, filled}: IHitCountProps): JSX.Element => {
-
+const HitCount = ({
+  isEditable,
+  filled,
+  randomColor,
+}: IHitCountProps): JSX.Element => {
   const color: string = useSelector((state: IAppState) => state.color.color);
-  const randomColor: string[] = useSelector(
-    (state: IAppState) => state.color.randomColor
-  );
 
   const dispatch = useDispatch();
 
@@ -65,7 +67,7 @@ const HitCount = React.memo(({isEditable, filled}: IHitCountProps): JSX.Element 
         }
       });
 
-      const randomUniqColorArr = [...(randomUniqColorSet)];
+      const randomUniqColorArr = [...randomUniqColorSet];
 
       /** Checks for a color from the array. */
       randomUniqColorArr.forEach((el: string) => {
@@ -89,7 +91,7 @@ const HitCount = React.memo(({isEditable, filled}: IHitCountProps): JSX.Element 
   const filledBlockCounter = () => {
     let showConfirm = true;
 
-    if(filledAll.indexOf(0) >= 0) {
+    if (filledAll.indexOf(0) >= 0) {
       showConfirm = false;
     }
 
@@ -100,7 +102,7 @@ const HitCount = React.memo(({isEditable, filled}: IHitCountProps): JSX.Element 
 
   /** Fills the Circle component with color. */
   const handlePainting = (_: string, i: number) => {
-    if(isEditable) {
+    if (isEditable) {
       const newCircle = { ...circle };
       const newFilledAll = filledAll;
 
@@ -150,7 +152,6 @@ const HitCount = React.memo(({isEditable, filled}: IHitCountProps): JSX.Element 
       {sideString(filled)}
     </div>
   );
-});
+};
 
-HitCount.displayName = "HitCount";
-export default HitCount;
+export default React.memo(HitCount);

@@ -6,7 +6,7 @@ import Game from "Modules/Game/Game";
 const Layout = (): JSX.Element => {
   return (
     <div className={s["layout"]}>
-      <Game/>
+      <Game />
     </div>
   );
 };

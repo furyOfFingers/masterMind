@@ -12,28 +12,16 @@ interface ICalculationFieldProps {
 /**
  * Component displaying correct selection.
  */
-const CalculationField = React.memo(
-  ({ number }: ICalculationFieldProps): JSX.Element => {
-    const circleRender = () => {
-      const circleArr: JSX.Element[] = [];
+const CalculationField = ({ number }: ICalculationFieldProps): JSX.Element => {
+  const circleRender = () => {
+    if (!number) return null;
 
-      if (number) {
-        for (let i = 0; i < number; i++) {
-          circleArr.push(
-            <Circle
-              key={i}
-              extraClass={[s[CircleArr[i]]]}
-              size="small"
-            />
-          );
-        }
-      }
+    return [...Array(number)].map((_, i) => (
+      <Circle key={i} extraClass={[s[CircleArr[i]]]} size="small" />
+    ));
+  };
 
-      return circleArr;
-    };
+  return <div className={s["calculation-field"]}>{circleRender()}</div>;
+};
 
-    return <div className={s["calculation-field"]}>{circleRender()}</div>;
-  });
-
-CalculationField.displayName = "CalculationField";
-export default CalculationField;
+export default React.memo(CalculationField);

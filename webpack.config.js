@@ -16,20 +16,28 @@ module.exports = {
 
   resolve: {
     alias: {
-      Assets: path.resolve(__dirname, 'src/Assets/'),
-      Components: path.resolve(__dirname, 'src/Components/'),
-      Constants: path.resolve(__dirname, 'src/Constants/'),
-      Modules: path.resolve(__dirname, 'src/Modules/'),
-      Redux: path.resolve(__dirname, 'src/Redux/'),
-      Store: path.resolve(__dirname, 'src/Store/'),
-      Types: path.resolve(__dirname, 'src/Types/'),
-      Utilits: path.resolve(__dirname, 'src/Utilits/'),
+      Assets: path.resolve(__dirname, "src/Assets/"),
+      Components: path.resolve(__dirname, "src/Components/"),
+      Constants: path.resolve(__dirname, "src/Constants/"),
+      Modules: path.resolve(__dirname, "src/Modules/"),
+      Redux: path.resolve(__dirname, "src/Redux/"),
+      Store: path.resolve(__dirname, "src/Store/"),
+      Types: path.resolve(__dirname, "src/Types/"),
+      Utilits: path.resolve(__dirname, "src/Utilits/"),
     },
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
   },
   devtool: "inline-source-map",
   module: {
     rules: [
+      {
+        test: /\.(jpg|png)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
       {
         enforce: "pre",
         test: /\.(ts|js)x?$/,
@@ -55,7 +63,7 @@ module.exports = {
               esModule: true,
               sourceMap: true,
               modules: {
-                localIdentName: "[local]--[hash:base64:4]"
+                localIdentName: "[local]--[hash:base64:4]",
               },
             },
           },
@@ -66,7 +74,7 @@ module.exports = {
   },
   devServer: {
     hot: true,
-    liveReload: true
+    liveReload: true,
   },
   plugins: [htmlPlugin],
 };

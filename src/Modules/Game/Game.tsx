@@ -11,93 +11,103 @@ import CalculationField from "Components/CalculationField/CalculationField";
 import HitCount from "Components/HitCount/HitCount";
 import Button from "Components/Button/Button";
 import ColorHolder from "Components/ColorHolder/ColorHolder";
+import HowToPlay from "Modules/HowToPlay/HowToPlay";
 
-const Game = React.memo(
-  (): JSX.Element => {
-    shuffleColorArr(AllColor, CircleArr.length);
-    const [gameStatic, setGameStatic] = useState([InitialGameStatic]);
-    const [victory, setVictory] = useState(false);
+const Game = (): JSX.Element => {
+  shuffleColorArr(AllColor, CircleArr.length);
+  const [gameStatic, setGameStatic] = useState([InitialGameStatic]);
+  const [victory, setVictory] = useState(false);
 
-    const showConfirm: boolean = useSelector(
-      (state: IAppState) => state.show.show
-    );
+  const randomColor: string[] = useSelector(
+    (state: IAppState) => state.color.randomColor
+  );
 
-    const colorInfo: string = useSelector(
-      (state: IAppState) => state.color.roundStatic
-    );
+  const showConfirm: boolean = useSelector(
+    (state: IAppState) => state.show.show
+  );
 
-    const dispatch = useDispatch();
+  const colorInfo: string = useSelector(
+    (state: IAppState) => state.color.roundStatic
+  );
 
-    const handleConfirm = () => {
-      if (colorInfo === "44") {
-        setVictory(true);
-      } else {
-        const newGameStatic = { ...gameStatic };
-        const l = Object.keys(newGameStatic).length;
+  const dispatch = useDispatch();
 
-        newGameStatic[l - 1].number = colorInfo;
-        newGameStatic[l - 1].editable = false;
-        newGameStatic[l] = {
-          number: "",
-          fillLine: false,
-          editable: true,
-        };
+  const handleConfirm = () => {
+    if (colorInfo === "44") {
+      setVictory(true);
+    } else {
+      const newGameStatic = { ...gameStatic };
+      const l = Object.keys(newGameStatic).length;
 
-        dispatch(getConfirmAction(false));
-        setGameStatic(newGameStatic);
-      }
-    };
+      newGameStatic[l - 1].number = colorInfo;
+      newGameStatic[l - 1].editable = false;
+      newGameStatic[l] = {
+        number: "",
+        fillLine: false,
+        editable: true,
+      };
 
-    const gameStageRender = () => {
-      const newGameStage = [] as JSX.Element[];
+      dispatch(getConfirmAction(false));
+      setGameStatic(newGameStatic);
+    }
+  };
 
-      Object.keys(gameStatic).forEach((_: string, i: number) => {
-        newGameStage.push(
-          <div key={i} className={s["playing-field"]}>
-            <CalculationField
-              number={parseInt(gameStatic[i].number.charAt(0))}
-            />
+  const gameStageRender = () => {
+    const newGameStage = [] as JSX.Element[];
 
-            <HitCount
-              filled={!!gameStatic[i].number.charAt(0)}
-              isEditable={gameStatic[i].editable}
-            />
+    Object.keys(gameStatic).forEach((_: string, i: number) => {
+      newGameStage.push(
+        <div key={i} className={s["playing-field"]}>
+          <CalculationField number={parseInt(gameStatic[i].number.charAt(0))} />
 
-            <CalculationField
-              number={parseInt(gameStatic[i].number.charAt(1))}
-            />
+          <HitCount
+            randomColor={randomColor}
+            filled={!!gameStatic[i].number.charAt(0)}
+            isEditable={gameStatic[i].editable}
+          />
+
+          <CalculationField number={parseInt(gameStatic[i].number.charAt(1))} />
+        </div>
+      );
+    });
+
+    return newGameStage;
+  };
+
+  const gameRender = () => {
+    if (victory) {
+      return (
+        <div className={s["victory"]}>
+          <span>you figured out the code</span>
+          <span>{randomColor.join("-")}</span>
+        </div>
+      );
+    } else {
+      if (Object.keys(gameStatic).length === 8) {
+        return (
+          <div className={s["lose"]}>
+            <span>you lose</span>
+            <span>{randomColor.join("-")}</span>
           </div>
         );
-      });
-
-      return newGameStage;
-    };
-
-    const gameRender = () => {
-      if (victory) {
-        return <div className={s["lose"]}> you figured out the code </div>;
       } else {
-        if (Object.keys(gameStatic).length === 9) {
-          return <div className={s["lose"]}> you lose </div>;
-        } else {
-          return gameStageRender();
-        }
+        return gameStageRender();
       }
-    };
+    }
+  };
 
-    return (
-      <div className={s["game"]}>
-        <ColorHolder />
+  return (
+    <div className={s["game"]}>
+      <ColorHolder />
 
-        {gameRender()}
+      <HowToPlay />
 
-        {showConfirm && !victory && (
-          <Button text="Confirm" onClick={handleConfirm} />
-        )}
-      </div>
-    );
-  }
-);
+      {gameRender()}
 
-Game.displayName = "Game";
-export default Game;
+      {showConfirm && !victory && (
+        <Button text="Confirm" onClick={handleConfirm} />
+      )}
+    </div>
+  );
+};
+export default React.memo(Game);
