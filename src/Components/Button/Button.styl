@@ -1,15 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import '../../Assets/variables.styl';
 
 button
-  padding 3px 10px
   border none
-  border-radius 0 0 10px 10px
   cursor pointer
   font-size 15px
-  background-color $color-rose
+  font-family "Indie Flower"
   &:focus
     outline none
 
 .disabled
   opacity 0.4
 
+.type
+  &__confirm
+    padding 0 10px
+    background-color $color-rose
+    border-radius 0 0 10px 10px
+    font-size 18px
+  &__info
+    background-color transparent
+  &__close
+    background-color transparent
+    margin-bottom 10px
+    color red

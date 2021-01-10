@@ -20,25 +20,22 @@ interface ICircleProps {
 /**
  * Component circle.
  */
-const Circle = React.memo(
-  ({
-    size = "big",
-    clicked,
-    active,
-    onClick,
-    isColorSelected,
-    extraClass = [],
-  }: ICircleProps): JSX.Element => {
-    const cn = c(
-      so[`size__${size}`],
-      { [so["active"]]: active },
-      { [so["clicked"]]: clicked },
-      { [so["color-selected"]]: isColorSelected },
-      ...extraClass
-    );
+const Circle = ({
+  size = "big",
+  clicked,
+  active,
+  onClick,
+  isColorSelected,
+  extraClass = [],
+}: ICircleProps): JSX.Element => {
+  const cn = c(
+    so[`size__${size}`],
+    { [so["active"]]: active },
+    { [so["clicked"]]: clicked },
+    { [so["color-selected"]]: isColorSelected },
+    ...extraClass
+  );
 
-    return <div onClick={onClick} className={cn}></div>;
-  }
-);
-
-export default Circle;
+  return <div onClick={onClick} className={cn}></div>;
+};
+export default React.memo(Circle);
