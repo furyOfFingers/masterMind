@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import c from "classnames";
 
 import IAppState from "Types/State";
-import { IInitialCircle } from "Types/Types";
 import { getConfirmAction } from "Redux/Confirmer/Reducers";
 import { getRoundStatics } from "Redux/Color/Reducers";
 import Circle from "Components/Circle/Circle";
-import { CircleArr, InitialCircle } from "Constants/const";
+import hitCount from "InitialData/hitCount";
 import s from "./style.styl";
 import so from "Assets/outerStyle.styl";
 
@@ -32,18 +31,8 @@ const HitCount = ({
 
   const dispatch = useDispatch();
 
-  const [circle, setCircle] = useState({} as IInitialCircle[]);
+  const [circle, setCircle] = useState(hitCount());
   const [filledAll, setFilledAll] = useState([0, 0, 0, 0]);
-
-  useEffect(() => {
-    const newCircle = {} as IInitialCircle[];
-
-    CircleArr.forEach((_: string, i: number) => {
-      newCircle[i] = { ...InitialCircle };
-    });
-
-    setCircle(newCircle);
-  }, []);
 
   const checkingColorBlocks = () => {
     const allColorsFromBlock = [] as string[];

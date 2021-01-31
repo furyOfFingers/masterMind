@@ -1,30 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import s from "./style.styl";
 import { useDispatch } from "react-redux";
 
 import { IInitialCircle } from "Types/Types";
 
-import { AllColor, InitialCircle } from "Constants/const";
 import { getColor } from "Redux/Color/Reducers";
 import Circle from "Components/Circle/Circle";
+import colorHolder from "InitialData/colorHolder";
 
 /**
  * Component containing all colors.
  */
 const ColorHolder = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [circle, setCircle] = useState({} as IInitialCircle[]);
-
-  useEffect(() => {
-    const newCircle = {} as IInitialCircle[];
-
-    AllColor.forEach((el, i) => {
-      newCircle[i] = { ...InitialCircle };
-      newCircle[i].extraClass = el;
-    });
-
-    setCircle(newCircle);
-  }, []);
+  const [circle, setCircle] = useState(colorHolder());
 
   const handleColorPick = useCallback(
     (_: string, i: number) => {
