@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import IAppState from "Types/State";
 import { getConfirmAction } from "Redux/Confirmer/Reducers";
-import { AllColor, CircleArr, InitialGameStatic } from "Constants/const";
-import shuffleColorArr from "Utilits/shuffleColorArr";
+
+import { InitialGameStatic } from "InitialData/initialData";
+import { AllColor, CircleArr } from "Constants/const";
+import shuffleColorArr from "Hooks/useShuffleColorArr";
 
 import CalculationField from "Components/CalculationField/CalculationField";
 import HitCount from "Components/HitCount/HitCount";

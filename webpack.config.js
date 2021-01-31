@@ -17,13 +17,14 @@ module.exports = {
   resolve: {
     alias: {
       Assets: path.resolve(__dirname, "src/Assets/"),
+      InitialData: path.resolve(__dirname, "src/InitialData/"),
       Components: path.resolve(__dirname, "src/Components/"),
       Constants: path.resolve(__dirname, "src/Constants/"),
       Modules: path.resolve(__dirname, "src/Modules/"),
       Redux: path.resolve(__dirname, "src/Redux/"),
       Store: path.resolve(__dirname, "src/Store/"),
       Types: path.resolve(__dirname, "src/Types/"),
-      Utilits: path.resolve(__dirname, "src/Utilits/"),
+      Hooks: path.resolve(__dirname, "src/Hooks/"),
     },
     extensions: [".ts", ".tsx", ".js"],
   },

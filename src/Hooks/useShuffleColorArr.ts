@@ -3,7 +3,10 @@ import { useDispatch } from "react-redux";
 import { getRandomColor } from "../Redux/Color/Reducers";
 
 /** Randomly shuffle the array with the available colors */
-const shuffleColorArr = (allColor: Array<string>, circleArr: number): void => {
+const useShuffleColorArr = (
+  allColor: Array<string>,
+  circleArr: number
+): void => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,4 +18,4 @@ const shuffleColorArr = (allColor: Array<string>, circleArr: number): void => {
   }, []);
 };
 
-export default shuffleColorArr;
+export default useShuffleColorArr;
